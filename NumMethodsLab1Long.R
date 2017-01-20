@@ -89,6 +89,30 @@ while(finish == 1){
   print("")
   
   
+  #Exercise 3
+  print("Exercise 3: Conclusion")
+  for (i in seq(0,20)){
+    n <- seq(0,i)
+    r <- .5
+    x <- r^n
+    cat(i,' ', sum(x),' ', sum(x)-(1), '\n')
+  }
+  cat('inf ',1/(1-r), ' 0\n')
+  print("")
+  
+  #Can we just print matrices?
+  A <- matrix(seq(1,9), nrow = 3, ncol = 3)
+  print(A <- cbind(rbind(t(A),c(1,1,1)),c(1,2,3,4),deparse.level=0))
+  #Note that traversal is top to bottom first
+  #We also can do assignment in the middle of a command!
+  print(eigen(A))
+  
+  #Exercise 4
+  print("Exercise 4")
+  print(A <- t(matrix(c(1,-2,3,5, -2, 1, 1, 1, -1, 3, 1, -4, 1, 1, 1, 7), nrow = 4, ncol = 4)))
+  RightVal <- c(-4,5, 13, -4)
+  print(solve(A,RightVal))
+  
   #Evidently forgot to push on laptop
   #Basic Plotting
   print("We plot in the (x,y)-plane via plot(x,y)")
