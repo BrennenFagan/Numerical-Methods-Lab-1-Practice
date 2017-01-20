@@ -88,7 +88,27 @@ while(finish == 1){
   cat('     t cos(t) = ', t*cos(t), '\n     t^2 exp(-t) = ', t^2 * exp(-t), '\n')
   print("")
   
+  #Evidently forgot to push on laptop
+  #Basic Plotting
+  print("We plot in the (x,y)-plane via plot(x,y)")
+  x <- seq(0, 2*pi, by=.1)
+  y <- sin(x)
+  plot(x,y, type="o")
+  #Note that changing plot parameters
+  #only affects future plots!
+  #Parameters do stay in place between
+  #runs.
   
+  #Exercise 5
+  par(pty="s", bg = "black", col.lab = "white", col.main = "white", col.axis = "white")
+  theta=(0:100)*2*pi/100;
+  x <- cos(theta)
+  y <- sin(theta) 
+  coloring <- rgb(x*.5+.5,y*.5+.5,0*theta)
+  plot(x, y, main="Exercise 5", xlab="X", ylab="y", col = coloring)
+  
+  #Cleanup -> Reset parameters
+  par(pty="m")
   finish <- 0
 }
 if(finish == 1){
