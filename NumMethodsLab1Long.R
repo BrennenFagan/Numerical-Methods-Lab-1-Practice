@@ -63,7 +63,7 @@ while(finish == 1){
   
   #Vectors
   #Space tolerant?
-    x<-c(      9,8 ,7, 6)
+  x<-c(      9,8 ,7, 6)
   
   #Entry recycling is kind of bizarre, but good to know.
   cat(x / (1:8) + c(10,200), "\n")
@@ -88,6 +88,7 @@ while(finish == 1){
   cat('     t cos(t) = ', t*cos(t), '\n     t^2 exp(-t) = ', t^2 * exp(-t), '\n')
   print("")
   
+  
   #Evidently forgot to push on laptop
   #Basic Plotting
   print("We plot in the (x,y)-plane via plot(x,y)")
@@ -106,15 +107,17 @@ while(finish == 1){
   y <- sin(theta) 
   coloring <- rgb(x*.5+.5,y*.5+.5,0*theta)
   plot(x, y, main="Exercise 5", xlab="X", ylab="y", col = coloring)
+  grid(col = "white")
   
   #Cleanup -> Reset parameters
   par(pty="m")
+  
   finish <- 0
 }
 if(finish == 1){
   print("Captain, there's been an error. Launch aborted")
 }else{#Note, if the } is not adjacent to the else, 
-      #R does not detect as the same if-else
+  #R does not detect as the same if-else
   print("Liftoff!")
   print("   We have Liftoff!")}
 
