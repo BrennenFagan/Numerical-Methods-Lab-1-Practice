@@ -1,21 +1,25 @@
 #Lab 2:
 #Recreating function from previous Lab
-function_circle <- function(NumberOfPoints, Radius, Colors = "default"){
+function_circle <- function(NumberOfPoints, Radius, Colors = "default", NewPlot = 1){
   t <- (1:NumberOfPoints)/NumberOfPoints
   x <- sin(2*pi*t)
   y <- cos(2*pi*t)
   A <- list(x, y)
   par(pty="s")
   coloring <- rgb(0,0,0)
-  if(Colors == "RG_Pretty"){
+  if(Colors == "RG_Pretty"  || Colors == 1){
     coloring <- rgb(x*.5+.5,y*.5+.5,0)
-  }else if(Colors == "GB_Pretty"){
+  }else if(Colors == "GB_Pretty" || Colors == 2){
     coloring <- rgb(0,x*.5+.5,y*.5+.5)
-  }else if(Colors == "RB_Pretty"){
-    coloring <- rgb(x*.5+.5,0,y*.5+.5,0)
+  }else if(Colors == "RB_Pretty" || Colors == 3){
+    coloring <- rgb(y*.5+.5,0,x*.5+.5)
   }
   A <- lapply(A,"*",Radius)
-  plot(A[[1]], A[[2]], main="A circle", xlab="X", ylab="Y", col = coloring)
+  if(NewPlot){
+    plot(A[[1]], A[[2]], main="A circle", xlab="X", ylab="Y", col = coloring)
+  }else{
+    points(A[[1]], A[[2]], main="A circle", xlab="X", ylab="Y", col = coloring)
+  }
   par(pty="m")
   return (A)
 }
@@ -96,3 +100,10 @@ print(mysum(50))
 print(mysum(100))
 
 #Exercise 2:
+for(j in 7:1){
+  if(j==7){
+    function_circle(100, j, j%%4, 1)
+  }else{
+    function_circle(100, j, j%%4, 0)
+  }
+}
