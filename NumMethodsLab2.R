@@ -139,3 +139,13 @@ mysin <- function(x){
 }
 
 mysin(0)
+
+library("plot3Drgl")
+x <- seq(-2.5, 2.5, length.out = 100)
+y <- seq(-2,2, length.out = 100)
+xy <- mesh(x, y)
+z <- with(xy, x*exp(-x^2 - y^2))
+persp3D(x,y, z)
+plotrgl(smooth = TRUE)
+
+#Exercise 4
