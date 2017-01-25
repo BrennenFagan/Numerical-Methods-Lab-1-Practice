@@ -65,3 +65,34 @@ plot(function_calc_shifted_circle(100, 2)$x,function_calc_shifted_circle(100, 2)
 SHIFT <- 2
 points(function_calc_shifted_circle(100, 1)$x,function_calc_shifted_circle(100, 1)$y)
 par(pty="m")
+
+function_euler_number <- function(xValue, NthExpansion){
+  summand <- 1
+  Taylor <- 1
+  for (j in 1:NthExpansion){
+    Taylor <- Taylor*xValue/j
+    summand <- summand + Taylor
+  }
+  return (summand)
+}
+
+print(function_euler_number(1,5))
+
+#Exercise 1:
+function_p_series <- function(NthTerm, Exponent){
+  #Computes 1/(1^Exponent)+...+1/(NthTerm^Exponent)
+  #Request is for a loop
+  summand <- 0
+  for (nthTerm in 1:NthTerm){
+    summand <- summand + nthTerm ^ (-Exponent)
+  }
+  return (summand)
+}
+mysum <- function(N){
+  return (function_p_series(N,2))
+}
+print(mysum(10))
+print(mysum(50)) 
+print(mysum(100))
+
+#Exercise 2:
