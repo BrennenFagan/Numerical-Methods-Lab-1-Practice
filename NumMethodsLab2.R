@@ -107,3 +107,35 @@ for(j in 7:1){
     function_circle(100, j, j%%4, 0)
   }
 }
+
+#Should be able to implement a function that implements
+#Taylor Series functions for general "easy" functions
+#such as sin, cos, etc.
+#Currently not sure how to evaluate derivative at a point.
+# function_Taylor_Series <- function(ApproxValue, aPoint, EndTerm){
+#   summand <- 0
+#   for(nthTerm in 1:EndTerm){
+#     function(f) 
+#     gradient = deriv(~ f(x), "x")
+#     summand <- summand + deriv(f(aPoint))*(ApproxValue - aPoint)
+#   }
+# }
+
+#Exercise 3: Boring way
+function_MacLaurin_Sin <- function(ApproxValue, OrderOfError){
+  summand <- ApproxValue
+  nthTerm <- 0
+  error <- abs(ApproxValue) ^ (2*nthTerm + 3)/(factorial(2*nthTerm+3))
+  while(error>10^(-OrderOfError)){
+    nthTerm <- nthTerm + 1
+    summand <- summand + (-1)^nthTerm * ApproxValue ^ (2*nthTerm+1)/factorial(2*nthTerm+1)
+    error <- abs(ApproxValue) ^ (2*nthTerm + 3)/(factorial(2*nthTerm+3))
+  }
+  return(summand)
+}
+
+mysin <- function(x){
+  return (function_MacLaurin_Sin(x, 4))
+}
+
+mysin(0)
