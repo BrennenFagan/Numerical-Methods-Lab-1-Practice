@@ -133,4 +133,62 @@ hi_disp_temp <- function_forward_difference_heat(L, N, T, M*100, 5,
                                  function_default_inicond,
                                  DO_Plot = 1)
 
+#Exercise 6
+function_sample_nonhomogeneity <- function(x){
+  return(-25*sin(3*pi*x))
+}
+function_inicond_ex6 <- function(x){
+  return(-1.5*sin(2*pi*x))
+}
 
+function_forward_difference_heat_nonhomogenous<- function(
+  Length, LengthDivisions, Time, 
+  TimeDivisions, HeatDispersion, 
+  InitialConditionFunction = function_inicond_ex6, 
+  NonHomogenousFunction = function_sample_nonhomogeneity,
+  DO_Plot = 0
+){
+  #Calculate h and tau
+  LengthSegmentSize <- Length/LengthDivisions
+  TimeSegmentSize <- Time/TimeDivisions
+  #Calculate x and t
+  LengthSegments <- LengthSegmentSize*(1:(LengthDivisions-1))
+  TimeSegments <- TimeSegmentSize*(0:TimeDivisions)
+  #Calculate gamma
+  gamma <- HeatDispersion*TimeSegmentSize/(LengthSegmentSize^2)
+  
+  #Calculate Transition Matrix
+  Transition <- diag(1-2*gamma, LengthDivisions-1)
+  for (k in 1:(LengthDivisions-2)){
+    Transition[k, k+1] <- gamma -> Transition[k+1,k]
+  }
+  
+  #Calculate Forcing Vector
+  Forcing <- matrix(rep(0, LengthDivisions-1), nrow = LengthDivisions-1)
+  
+  #Calculate Initial Condition
+  w <- InitialConditionFunction(LengthSegments)
+  
+  #Calculate propagation
+  Temperature <- matrix(0, LengthDivisions-1, TimeDivisions+1) # Matrix to hold the solution
+  Temperature[ , 1] <- w
+  # Loop over time steps
+  for (j in 0:(M)) {
+    w <- Transition %*% w + TimeSegmentSize * Forcing
+    Temperature[ , j+1] <- w
+  }
+  
+  if(DO_Plot){
+    require("plot3Drgl")
+    persp3D(LengthSegments, TimeSegments, Temperature,
+            xlab="x", ylab="t", zlab="Temperature", # Provides axis labels
+            ticktype="detailed", nticks=4) # Provides axis ticks
+    plotrgl(smooth = TRUE, lighting = TRUE)
+  }
+  
+  return(Temperature)
+}
+
+Ex6Soln <- function_forward_difference_heat_nonhomogenous(
+  1, 10, .2, 100, 1, DO_Plot = 1
+)
