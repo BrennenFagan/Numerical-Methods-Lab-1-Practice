@@ -129,7 +129,7 @@ lo_disp_temp <- function_forward_difference_heat(L, N, T, M, .5,
 md_disp_temp <- function_forward_difference_heat(L, N, T, M*10, 1.5, 
                                  function_default_inicond,
                                  DO_Plot = 1)
-hi_disp_temp <- function_forward_difference_heat(L, N, T, M, 5, 
+hi_disp_temp <- function_forward_difference_heat(L, N, T, M*100, 5, 
                                  function_default_inicond,
                                  DO_Plot = 1)
 
