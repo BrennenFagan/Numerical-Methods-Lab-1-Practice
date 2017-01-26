@@ -189,6 +189,31 @@ function_forward_difference_heat_nonhomogenous<- function(
   return(Temperature)
 }
 
+function_zero <-function(x){
+  dimensions <- dim(x)
+  return(
+          matrix(
+                  0,
+                  nrow = dimensions[1],
+                  ncol = dimensions[2]
+                )
+         )
+}
+
+#So it works for the "trivial" case.
+BasicTest <- function_forward_difference_heat_nonhomogenous(
+  L, N, T, M, K, 
+  NonHomogenousFunction = function_zero,
+  DO_Plot = 1
+)
+
+#Identified N and M: tau <= h^2/2K
+BasicTest2 <- function_forward_difference_heat_nonhomogenous(
+  1, 30, .2, 1000, 1,
+  NonHomogenousFunction = function_zero,
+  DO_Plot = 0
+)
+
 Ex6Soln <- function_forward_difference_heat_nonhomogenous(
-  1, 10, .2, 100, 1, DO_Plot = 1
+  1, 30, .2, 1000, 1, DO_Plot = 1
 )
