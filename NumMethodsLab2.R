@@ -140,7 +140,7 @@ mysin <- function(x){
 
 mysin(0)
 
-library("plot3Drgl")
+require("plot3Drgl")
 x <- seq(-2.5, 2.5, length.out = 100)
 y <- seq(-2,2, length.out = 100)
 xy <- mesh(x, y)
@@ -149,3 +149,24 @@ persp3D(x,y, z)
 plotrgl(smooth = TRUE)
 
 #Exercise 4
+require("gmp")
+TUPPER <- as.bigz("96093937991895888497167296212785275471500433966012930665150551927170280239526642468964284174350718121267153782770623355993237280874144307891325963941337723487857735749823926629715517173716995165232890538221612403238855866184013235585136048828693337902491454229288667081096184496091705183454067827731551705405381627380967602565625016981482083418783163849115590225610003652351370343874461848378737238198224849863465033159410054974700593138339226497249461751545728366702369745461014655997933798537483143786841806593422227898388722980000748404719")
+x <- seq(0, 105)
+function_TUPPER <- function(){
+  Output <- matrix(0, nrow=106, ncol=17)
+  x <- seq(0, 105)
+  for (j in 0:16){
+    y <- TUPPER + j
+    for(chi in x){
+      #Appears that it will not give a decimal representation in the gmp package
+      #We are stuck. As a work around, we see how close performing strict modulo is.
+      Output[chi+1,j+1] <-as.integer(as.bigz(
+              ((y/17-((y%%17)/17))*as.bigq(2^(-17*chi-(floor(y)%%17))))
+            )%%2)
+    }
+  }
+  return(Output)
+}
+persp3D(x, seq(0:16), function_TUPPER())
+plotrgl()
+#Clearly, the strict modulo does not work in reproducing this function!
