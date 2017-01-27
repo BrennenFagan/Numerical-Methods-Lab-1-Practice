@@ -52,3 +52,42 @@ persp3D(sol$x, sol$t, sol$w,
         ticktype="detailed", nticks=4)
 plotrgl(smooth=TRUE, lighting = TRUE)
 
+#Exercise 1:
+#Function Signature:
+#forwardDifference(
+#ForcingFunction,
+#BoundaryCondition,
+#K=1, L=1, N=30, T=0.1, M=200
+#)
+#Note tau <= h^2/(2*1/4), where h = L/N, tau = T/M
+#     T/M <= (L/N)^2*2
+#     .1/M <= (1/N)^2
+#
+sol <- forwardDifference(f = function(x){-16*sin(8*pi*x)},
+                         u0 = function(x) {sin(pi*x)},
+                         K = 1/4, L = 1, N=30, T = .2, M=200)
+#Plot the solution.
+persp3D(sol$x, sol$t, sol$w,
+        xlab="x", ylab="t", zlab="w",
+        ticktype="detailed", nticks=4)
+plotrgl(smooth=TRUE, lighting = TRUE)
+
+numSol <- forwardDifference(f=function(x) {-25*sin(3*pi*x)},
+                            u0=function(x) {-3/2*sin(2*pi*x)},
+                            T=0.2, M=360
+)
+x <- numSol$x
+t <- numSol$t
+xy <- mesh(x, t)
+u <- with(xy, -3/2*sin(2*pi*x)*exp(-4*pi^2*y)
+          -25/(9*pi^2)*sin(3*pi*x)*(1-exp(-9*pi^2*y)))
+#True Solution
+persp3D(x, t, u, zlab="u", ticktype="detailed", nticks=4) 
+plotrgl()
+#Absolute Error
+persp3D(x, t, u - numSol$w, zlab="u - w", ticktype="detailed", nticks=4)
+plotrgl()
+#Relative Error: Issue due to how close we are to 0. 
+#For strictly positive problems, rel. error is more relevant.
+persp3D(x, t, (u - numSol$w)/u, zlab="(u - w)/u", ticktype="detailed", nticks=4)
+plotrgl()
