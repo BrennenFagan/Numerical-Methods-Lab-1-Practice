@@ -164,16 +164,16 @@ function_forward_difference_heat_nonhomogenous<- function(
   }
   
   #Calculate Forcing Vector
-  Forcing <- matrix(rep(0, LengthDivisions-1), nrow = LengthDivisions-1)
+  Forcing <- NonHomogenousFunction(LengthSegments)
   
   #Calculate Initial Condition
   w <- InitialConditionFunction(LengthSegments)
   
   #Calculate propagation
-  Temperature <- matrix(0, LengthDivisions-1, TimeDivisions+1) # Matrix to hold the solution
+  Temperature <- matrix(-15, LengthDivisions-1, TimeDivisions+1) # Matrix to hold the solution
   Temperature[ , 1] <- w
   # Loop over time steps
-  for (j in 0:(M)) {
+  for (j in 1:(TimeDivisions)) {
     w <- Transition %*% w + TimeSegmentSize * Forcing
     Temperature[ , j+1] <- w
   }
@@ -186,7 +186,7 @@ function_forward_difference_heat_nonhomogenous<- function(
     plotrgl(smooth = TRUE, lighting = TRUE)
   }
   
-  return(Temperature)
+  return(list(LengthSegments, TimeSegments, Temperature))
 }
 
 function_zero <-function(x){
