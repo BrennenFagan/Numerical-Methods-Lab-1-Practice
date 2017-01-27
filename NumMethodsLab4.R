@@ -91,3 +91,35 @@ plotrgl()
 #For strictly positive problems, rel. error is more relevant.
 persp3D(x, t, (u - numSol$w)/u, zlab="(u - w)/u", ticktype="detailed", nticks=4)
 plotrgl()
+
+#Interestingly, the amount of nonsense increases as the
+#distance from stability increases.
+#This is expected behaviour, but nonetheless nice to
+#verify.
+numSol <- forwardDifference(f=function(x) {-25*sin(3*pi*x)},
+                            u0=function(x) {-3/2*sin(2*pi*x)},
+                            T=0.2, M=1420, N=60
+)
+persp3D(numSol$x, numSol$t, numSol$w, 
+        xlab="x", ylab="t", zlab="w", 
+        ticktype="detailed", nticks=4) 
+
+numSol <- forwardDifference(f=function(x) {-25*sin(3*pi*x)},
+                            u0=function(x) {-3/2*sin(2*pi*x)},
+                            T=0.2, M=1440, N=60
+)
+persp3D(numSol$x, numSol$t, numSol$w, 
+        xlab="x", ylab="t", zlab="w", 
+        ticktype="detailed", nticks=4) 
+
+#Selection of points
+tSelect <- seq(1, 1441, by=4)
+t <- numSol$t[tSelect]
+w <- numSol$w[, tSelect]
+x <- numSol$x
+xy <- mesh(x, t)
+u <- with(xy, -3/2*sin(2*pi*x)*exp(-4*pi^2*y)
+          -25/(9*pi^2)*sin(3*pi*x)*(1-exp(-9*pi^2*y)))
+persp3D(x, t, u - w, zlab="u - w", ticktype="detailed", nticks=4)
+plotrgl()
+#Clear reduction in amount of error, as expected.
