@@ -77,7 +77,7 @@ function_forward_difference_heat <- function(
   Temperature <- matrix(0, LengthDivisions-1, TimeDivisions+1) # Matrix to hold the solution
   Temperature[ , 1] <- w
   # Loop over time steps
-  for (j in 0:(M)) {
+  for (j in 0:(TimeDivisions)) {
     w <- Transition %*% w
     Temperature[ , j+1] <- w
   }
@@ -204,7 +204,7 @@ function_zero <-function(x){
 BasicTest <- function_forward_difference_heat_nonhomogenous(
   L, N, T, M, K, 
   NonHomogenousFunction = function_zero,
-  DO_Plot = 1
+  DO_Plot = 0
 )
 
 #Identified N and M: tau <= h^2/2K
